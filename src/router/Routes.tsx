@@ -7,6 +7,7 @@ import Home from "../pages/home";
 import ArticleForm from "../layout/ArticleForm";
 import Create from "../pages/Create";
 import CreatureForm from "../layout/CreatureForm";
+import ArticleFormMaterial from "../layout/ArticleFormMaterialUI";
 
 export const routes: RouteObject[] = [
     { // top of the tree, can have child routes
@@ -26,8 +27,9 @@ export const routes: RouteObject[] = [
         element: <Create />,
         errorElement: <Error404 />,
         children: [
-            {path: 'create/article', element: <ArticleForm />},
-            {path: 'create/creature', element: <CreatureForm />},
+            {path: 'article', element: <ArticleForm />},
+            {path: 'creature', element: <CreatureForm />},
+            {path: 'article2', element: <ArticleFormMaterial />},
         ]
     }
 ]

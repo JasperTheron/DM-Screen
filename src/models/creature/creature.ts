@@ -1,3 +1,10 @@
+import { CreatureSkills } from "./creatureSkills";
+import { AbilityScores } from "./abilityScores";
+import { DamageTypes } from "./damageTypes";
+import { MovementTypes } from "./movementTypes";
+import { Senses } from "./senses";
+import { Conditions } from "./conditions";
+
 export interface Creature{
 
     id: string;
@@ -8,41 +15,21 @@ export interface Creature{
 
     ac: number;
 
-    walk: number;
+    movement: MovementTypes;
 
-    swim: number;
-
-    climb: number;
-
-    burrow: number;
-
-    strength: number;
-
-    dexterity: number;
-
-    constitution: number;
-
-    intellegence: number;
-
-    wisdom: number;
-
-    charisma: number;
+    abilityScores: AbilityScores;
 
     proficiencies: CreatureSkills;
 
-    skills: CreatureStats;
-
-    savingThrows: CreatureStats;
+    savingThrows: AbilityScores;
 
     resistances: DamageTypes;
 
-    immunities: string[],
+    damageImmunities: DamageTypes,
 
-    truesight: number;
+    conditionImmunities: Conditions,
 
-    blindsight: number;
-
-    darkvision: number;
+    senses: Senses;
 
     challengeRating: number;
 
