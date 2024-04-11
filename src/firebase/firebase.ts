@@ -1,6 +1,7 @@
 import {  initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 import { collection, getFirestore } from "firebase/firestore"
+import { getStorage } from "firebase/storage";
 
 
 // Your web app's Firebase configuration
@@ -20,3 +21,5 @@ const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const articlesCollection = collection(db, "articles");
+export const creaturesCollection = collection(db, "creatures");
+export const storage = getStorage();

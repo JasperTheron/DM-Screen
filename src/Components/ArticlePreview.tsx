@@ -7,7 +7,7 @@ interface Props{
 
 export default function ArticlePreview({article}: Props){
     return(
-        <div className="article--preview--container">
+        <div className="article--preview--container strong--box--shadow">
             <h2 className="preview--title">{article.title}</h2>
             <div className="preview--image--container">
                 <img className="preview--image" src="/assets/images/enneagram.png"/>

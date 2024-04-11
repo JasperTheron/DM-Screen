@@ -67,3 +67,9 @@ button:focus-visible {
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #3a3a3baa);
 }
+.light--box--shadow{
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.strong--box--shadow{
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

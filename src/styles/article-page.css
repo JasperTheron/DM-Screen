@@ -43,8 +43,8 @@
 }
 .topic--button{
     text-align: center;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     border-radius: 10px 10px 10px 10px;
     color: white;
 }

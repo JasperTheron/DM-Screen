@@ -1,16 +1,17 @@
 import { makeAutoObservable } from "mobx"
-import { articlesCollection } from "../firebase/firebase";
+import { Article } from "../models/article";
+import { fetchArticles } from "../firebase/artcleService";
 
 export default class ArticleStore {
 
-    articles = {};
+    articles: Article[] = [];
 
     constructor(){
         makeAutoObservable(this)
     }
     
    setarticles = () => {
-    articlesCollection
+        fetchArticles();
    }
 
 }
