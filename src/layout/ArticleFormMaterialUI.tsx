@@ -3,13 +3,16 @@ import { articlesCollection, storage } from "../firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Article } from "../models/article";
 import { addDoc } from "firebase/firestore";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { topicList } from "../data/topics";
 
 export default function ArticleFormMaterial() {
   const [title, setTitle] = useState('');
   const [subTitle, setSubTitle] = useState('');
   const [content, setContent] = useState('');
-  const [topics, setTopics] = useState('');
+  const [topics, setTopics] = useState<string[]>([]);
   const [author, setAuthor] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [fileUploadProgress, setFileUploadProgress] = useState(0);
@@ -17,6 +20,14 @@ export default function ArticleFormMaterial() {
   function setUploadProgress(progress: number) {
     setFileUploadProgress(progress);
   }
+
+  const handletopicSelect = (event: SelectChangeEvent<string[]>) => {
+    setTopics(event.target.value as string[]);
+  };
+
+  const handleEditorChange = (value: string) => {
+    setContent(value);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +56,7 @@ export default function ArticleFormMaterial() {
             title,
             subTitle,
             content,
-            topics: topics.split(',').map((topic) => topic.trim()),
+            topics,
             author,
             imageUrl,
           };
@@ -59,7 +70,7 @@ export default function ArticleFormMaterial() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "auto" }}>
+    <form onSubmit={handleSubmit} style={{margin: "auto" }}>
       <Typography variant="h6" gutterBottom>
         Create Article
       </Typography>
@@ -81,26 +92,27 @@ export default function ArticleFormMaterial() {
         required
         margin="normal"
       />
-      <TextField
-        label="Content"
-        variant="outlined"
-        fullWidth
-        multiline
-        rows={4}
+      <ReactQuill
         value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-        margin="normal"
+        onChange={handleEditorChange}
+        modules={{ toolbar: true }}
+        style={{ marginBottom: "16px" }}
       />
-      <TextField
-        label="Topics (comma-separated)"
-        variant="outlined"
-        fullWidth
+      <InputLabel id="topic-select">Select Topics</InputLabel>
+      <Select
+        labelId="topic-select"
+        id="topic-select"
+        multiple
         value={topics}
-        onChange={(e) => setTopics(e.target.value)}
-        required
-        margin="normal"
-      />
+        onChange={handletopicSelect}
+        fullWidth
+      >
+        {
+          topicList.map((topic) => (
+            <MenuItem value={topic}>{topic}</MenuItem>
+          ))
+        }
+      </Select>
       <TextField
         label="Author"
         variant="outlined"

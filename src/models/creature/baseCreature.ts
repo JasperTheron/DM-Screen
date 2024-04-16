@@ -13,12 +13,13 @@ const baseCreature: Creature = {
       fly: 0
     },
     abilityScores: {
-      dex: 10,
-      str: 10,
-      con: 10,
-      int: 10,
-      wis: 10,
-      cha: 10
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intellegence: 10,
+      wisdom: 10,
+      charisma: 10
+
     },
     proficiencies: {
       athletics: 0,
@@ -41,12 +42,12 @@ const baseCreature: Creature = {
       persuation: 0
     },
     savingThrows: {
-      dex: 0,
-      str: 0,
-      con: 0,
-      int: 0,
-      wis: 0,
-      cha: 0
+      strength: 0,
+      dexterity: 0,
+      constitution: 0,
+      intellegence: 0,
+      wisdom: 0,
+      charisma: 0
     },
     resistances: {
       bludgeoning: false,

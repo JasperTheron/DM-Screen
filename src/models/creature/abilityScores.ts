@@ -1,8 +1,8 @@
 export interface AbilityScores{
-    str: number;
-    dex: number;
-    con: number;
-    int: number;
-    wis: number;
-    cha: number;
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intellegence: number;
+    wisdom: number;
+    charisma: number;
 }
