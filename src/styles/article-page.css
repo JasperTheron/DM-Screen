@@ -1,9 +1,10 @@
 
-.articles--container{
+.article--card--container{
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 5em; 
     padding-top: 5em;
+    padding-bottom: 5em;
 }
 
 .article--preview--container{
@@ -22,6 +23,7 @@
     height: 200px;
     display: flex;
     align-items: center;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .preview--image{
@@ -33,6 +35,8 @@
     width: 250px;
     border-radius: 10px 10px 10px 10px;
     background-color: #F2F2EA;
+    height: 150px;
+    overflow: scroll;
 }
 
 .website--tests{

@@ -19,7 +19,6 @@ const baseCreature: Creature = {
       intellegence: 10,
       wisdom: 10,
       charisma: 10
-
     },
     proficiencies: {
       athletics: 0,

@@ -7,10 +7,12 @@ import { Button, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typ
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { topicList } from "../data/topics";
+import '../styles/forms.css'
 
-export default function ArticleFormMaterial() {
+export default function ArticleForm() {
   const [title, setTitle] = useState('');
   const [subTitle, setSubTitle] = useState('');
+  const [preview, setPreview] = useState('');
   const [content, setContent] = useState('');
   const [topics, setTopics] = useState<string[]>([]);
   const [author, setAuthor] = useState('');
@@ -52,13 +54,15 @@ export default function ArticleFormMaterial() {
           const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
 
           const article: Article = {
-            id: '', // Firestore will generate a unique ID
+            firebaseId: '', // Firestore will generate a unique ID
             title,
+            preview,
             subTitle,
             content,
             topics,
             author,
             imageUrl,
+            createdBy: ''
           };
           const docRef = await addDoc(articlesCollection, article);
           console.log('Article created with ID:', docRef.id);
@@ -70,7 +74,7 @@ export default function ArticleFormMaterial() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{margin: "auto" }}>
+    <form onSubmit={handleSubmit} style={{margin: "auto" }} className="article--form">
       <Typography variant="h6" gutterBottom>
         Create Article
       </Typography>
@@ -97,6 +101,15 @@ export default function ArticleFormMaterial() {
         onChange={handleEditorChange}
         modules={{ toolbar: true }}
         style={{ marginBottom: "16px" }}
+      />
+        <TextField
+        label="Preview"
+        variant="outlined"
+        fullWidth
+        value={preview}
+        onChange={(e) => setPreview(e.target.value)}
+        required
+        margin="normal"
       />
       <InputLabel id="topic-select">Select Topics</InputLabel>
       <Select
@@ -131,13 +144,13 @@ export default function ArticleFormMaterial() {
           id="image-file"
         />
         <label htmlFor="image-file">
-          <Button variant="contained" component="span">
+          <Button variant="contained" component="span" className="upload--button">
             Upload Image
           </Button>
           {fileUploadProgress !== 0 && <span>{fileUploadProgress}% UPLOADED</span>}
         </label>
       </div>
-      <Button type="submit" variant="contained" color="primary" style={{ marginTop: "20px" }}>
+      <Button type="submit" variant="contained" className="submit--button" style={{ marginTop: "20px" }}>
         Create Article
       </Button>
     </form>

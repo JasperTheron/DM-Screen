@@ -1,10 +1,15 @@
 import { Outlet } from "react-router-dom";
+import '../styles/create-page.css'
+import Sidebar from "../layout/SideBar";
 
 export default function Create(){
     return(
-        <>
-            <h1>FORMS PAGE</h1>
-            <Outlet />
-        </>
+        <div className="create">
+            <Sidebar />
+            <div className="create--main--content">
+                <Outlet />
+            </div>
+        </div>
+
     )
 }

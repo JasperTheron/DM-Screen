@@ -1,0 +1,19 @@
+.create{
+    display: flex;
+    flex-direction: row;
+    background-color: #f3f1ea
+}
+.create--main--content{               
+    width: 85vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar{
+    width: 15vw;
+    height: 100vh;
+    background-color: rgba(249,241,219,1);
+}
+.acordian >*{
+    background-color: rgba(249,241,219,1);
+}

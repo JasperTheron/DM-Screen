@@ -10,8 +10,8 @@ export default class ArticleStore {
         makeAutoObservable(this)
     }
     
-   setarticles = () => {
-        fetchArticles();
+   setarticles = async () => {
+        this.articles = await fetchArticles();
    }
 
 }
