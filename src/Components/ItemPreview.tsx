@@ -1,4 +1,4 @@
-import { Item } from "../models/Item";
+import { Item } from "../models/item/Item";
 // import * as sanitizeHtml from 'sanitize-html'
 
 interface Props{
@@ -16,8 +16,9 @@ export default function ItemPreview2({item}: Props){
                 </div>)
             }
             <div className="top--text">
-                <h3>{item.name}</h3>
-                <em>{item.rarity} {item.wonderous? " - Wonderous":""} {item.attunementReq !== ""? `(${item.attunementReq})`:""}</em>
+                <h2>{item.name}</h2>
+                <em>{item.rarity} {item.type}{item.subType !== '' ? `, ${item.subType}` : ""}</em><br/>
+                <em>{item.attunementReq !== ''? `(${item.attunementReq})`:""}</em>
             </div>
             <div className="main--text">
                 <div dangerouslySetInnerHTML={{ __html:  item.effects }} />

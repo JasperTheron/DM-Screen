@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Item } from "../models/Item";
+import { Item } from "../models/item/Item";
 import { fetchItems } from "../firebase/itemService";
 import '../styles/items-page.css'
 import ItemPreview from "../Components/ItemPreview";

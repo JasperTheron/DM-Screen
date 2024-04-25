@@ -5,7 +5,9 @@
     padding-top: 5em;
     padding-bottom: 5em;
 }
-
+.main--text{
+    overflow: scroll;
+}
 .item--card--content{
     height: 400px;
     width: 350px;
@@ -14,8 +16,7 @@
     flex-direction: column;
     gap: 0;
     align-items: center;
-    background-color: #E7E0CB;
-    border-radius: 10px 10px 10px 10px;
+    background-color: #e7e0cb30;
     text-align: left;
     padding-left: 10px;
     padding-right: 10px;
@@ -24,7 +25,8 @@
 .item--image-container {
     position: absolute; 
     top: 0; 
-    right: 0; 
+    right: 0;
+    margin: 5px;
 }
 .top--text{
     width: 75%;
@@ -36,8 +38,15 @@
     width: 80px;
     border-radius: 50px;
     transition: transform 0.3s;
+    border-color: rgba(223, 216, 159, 0.925);
+    border-style: solid;
+    border-width: 6px;
 }
-
+.item--card{
+    background-image: url('/public/assets/images/paper-bkgrnd.jpg');
+    background-size: 380px;
+    border-radius: 10px 10px 10px 10px;
+}
 .item--image:hover {
     transform: scale(1.8); 
 }

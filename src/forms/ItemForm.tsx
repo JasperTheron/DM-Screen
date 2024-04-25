@@ -1,20 +1,19 @@
 import { 
-    Button, 
-    FormControlLabel, 
+    Button,  
     InputLabel, MenuItem, 
     Select, SelectChangeEvent, 
-    Switch, 
     TextField, 
     Typography } from "@mui/material";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import '../styles/forms.css'
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { itemsCollection, storage } from "../firebase/firebase";
-import { Item } from "../models/Item";
+import { Item } from "../models/item/Item";
 import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { heavyArmorTypes, lightArmorTypes, martialWeaponTypes, meduimArmorTypes, simpleWeaponTypes, types, wonderousTypes } from "../models/item/typeDetails";
 
 export default function ItemForm(){
 
@@ -22,28 +21,49 @@ export default function ItemForm(){
 
     // === Form State ===
     const [name, setName] = useState('');
-    const [rarity, setRarity] = useState('Unknown');
-    const [wonderous, setWonderous] = useState(false);
+    const [rarity, setRarity] = useState('Common');
     const [attunementReq, setAttunementReq] = useState('Requires attunement');
     const [effects, setEffects] = useState('');
+    const [type, setType] = useState('');
+    const [subType, setSubType] = useState('');
     const [imageFile, setImageFile] = useState<File | null>(null);
 
     // === Helper State ===
     const [fileUploadProgress, setFileUploadProgress] = useState(0);
     const [submitting, setSubmitting] = useState(false);
+    const [showSubtype, setShowSubtype] = useState(false);
 
+    useEffect(() => {
+      if(type === 'wonderous item' 
+      || type === 'simple weapon'
+      || type === 'martial weapon'
+      || type === 'light armor'
+      || type === 'medium armor'
+      || type === 'heavy armor'
+    ){ setShowSubtype(true);}
+    else{
+      setShowSubtype(false);
+      setSubType('');
+    }
+    },[type]);
 
     // === Helper Functions ===
     function setUploadProgress(progress: number) {
         setFileUploadProgress(progress);
     }
-
     const handleEditorChange = (value: string) => {
         setEffects(value);
       };
-
     const handleRaritySelect = (event: SelectChangeEvent<string>) => {
-    setRarity(event.target.value as string);
+      setRarity(event.target.value as string);
+    };
+
+    // handle type select change
+    const handleTypeSelect = (event: SelectChangeEvent<string>) => {
+      setType(event.target.value as string);
+    };
+    const handleSubTypeSelect = (event: SelectChangeEvent<string>) => {
+      setSubType(event.target.value as string);
     };
     
 
@@ -76,7 +96,8 @@ export default function ItemForm(){
                 name,
                 rarity,
                 effects,
-                wonderous,
+                type,
+                subType,
                 attunementReq,
                 author: '',
                 imageUrl,
@@ -123,24 +144,90 @@ export default function ItemForm(){
                         value={rarity}
                         onChange={handleRaritySelect}
                         required
-                    >
+                      >
                         <MenuItem value='Common'>Common</MenuItem>
                         <MenuItem value='Uncommon'>Uncommon</MenuItem>
                         <MenuItem value='Rare'>Rare</MenuItem>
                         <MenuItem value='Very Rare'>Very Rare</MenuItem>
                         <MenuItem value='Legendary'>Legendary</MenuItem>
                         <MenuItem value='Artifact'>Artifact</MenuItem>
-                        <MenuItem value='Unknown' selected>Unknown</MenuItem>
+                        <MenuItem value='Unknown'>Unknown</MenuItem>
                     </Select>
-                    <FormControlLabel
-                        label="Magor"
-                        control={
-                        <Switch
-                            checked={wonderous}
-                            onChange={() => setWonderous(!wonderous)}
-                        />
-                        }
-                    />
+                    <InputLabel id="type-select">Type</InputLabel>
+                    <Select
+                        labelId="type-select"
+                        label="Type"
+                        id="type-select"
+                        fullWidth
+                        value={type}
+                        onChange={handleTypeSelect}
+                        required
+                      >
+                        {types.map(type => (
+                          <MenuItem value={type}>{type}</MenuItem>
+                        ))}
+                    </Select>
+                    
+                    {/* === SUB TYPE SELECT (OPTIONAL DISSPLAY) === */}
+                    {
+                    showSubtype &&
+                    < div className="sub-type-select-cont">
+                      <InputLabel id="sub-type-select">Sub Tpye</InputLabel>
+                      <Select
+                          labelId="sub-type-select"
+                          label="sub-type"
+                          id="sub-type-select"
+                          fullWidth
+                          value={subType}
+                          onChange={handleSubTypeSelect}
+                          required
+                        >
+                          {
+                            (type === 'wonderous item') && (
+                                  wonderousTypes.map(subtype => (
+                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                  ))
+                            )
+                          }
+                          {
+                            (type === 'light armor') && (
+                                  lightArmorTypes.map(subtype => (
+                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                  ))
+                            )
+                          }
+                          {
+                            (type === 'medium armor') && (
+                                  meduimArmorTypes.map(subtype => (
+                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                  ))
+                            )
+                          }
+                          {
+                            (type === 'heavy armor') && (
+                                  heavyArmorTypes.map(subtype => (
+                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                  ))
+                            )
+                          }
+                          {
+                            (type === 'simple weapon') && (
+                                  simpleWeaponTypes.map(subtype => (
+                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                  ))
+                            )
+                          }
+                          {
+                            (type === 'martial weapon') && (
+                                  martialWeaponTypes.map(subtype => (
+                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                  ))
+                            )
+                          }
+                      </Select>
+                    </div>
+                    }
+                    
                     <TextField
                         label="Attumenet Requirements"
                         variant="outlined"
@@ -180,5 +267,5 @@ export default function ItemForm(){
             </>
         )
       }
-    
+      
 }

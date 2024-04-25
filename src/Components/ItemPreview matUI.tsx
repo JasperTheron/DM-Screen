@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Divider, Typography } from "@mui/material";
-import { Item } from "../models/Item";
+import { Item } from "../models/item/Item";
 
 interface Props{
     item: Item;
@@ -10,7 +10,6 @@ const cardStyles = {
     borderRadius: "10px",
     height: 500 
 }
-
 
 export default function ItemPreview({item}: Props){
     return(
@@ -26,7 +25,7 @@ export default function ItemPreview({item}: Props){
                 {item.name}
                 </Typography>
                 <Typography gutterBottom component="div">
-                    <em>{item.rarity} {item.wonderous? " - Wonderous":""} {item.attunementReq !== ""? `(${item.attunementReq})`:""}</em>
+                    {/* <em>{item.rarity} {item.wonderous? " - Wonderous":""} {item.attunementReq !== "" ? `(${item.attunementReq})`: ""}</em> */}
                 </Typography>
                 <Divider></Divider>
                 <Typography variant="body1">

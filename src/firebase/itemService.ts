@@ -1,5 +1,5 @@
 import { doc, getDoc, getDocs } from "firebase/firestore";
-import { Item } from "../models/Item";
+import { Item } from "../models/item/Item";
 import { itemsCollection } from "./firebase";
 
 export const fetchItems = async (): Promise<Item[]> => {
