@@ -31,6 +31,7 @@ export const routes: RouteObject[] = [
             {path: 'article', element: <ArticleForm />},
             {path: 'creature', element: <CreatureForm />},
             {path: 'item', element: <ItemForm />},
+            {path: 'editItem/:id', element: <ItemForm />},
         ]
     }
 ]

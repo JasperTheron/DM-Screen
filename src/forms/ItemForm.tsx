@@ -12,13 +12,14 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { itemsCollection, storage } from "../firebase/firebase";
 import { Item } from "../models/item/Item";
 import { addDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { heavyArmorTypes, lightArmorTypes, martialWeaponTypes, meduimArmorTypes, simpleWeaponTypes, types, wonderousTypes } from "../models/item/typeDetails";
+import { deleteItem, fetchItemById, updateItem } from "../firebase/itemService";
+import { blankItem } from "../models/item/blankItem";
 
 export default function ItemForm(){
 
     const navigate = useNavigate();
-
     // === Form State ===
     const [name, setName] = useState('');
     const [rarity, setRarity] = useState('Common');
@@ -32,6 +33,41 @@ export default function ItemForm(){
     const [fileUploadProgress, setFileUploadProgress] = useState(0);
     const [submitting, setSubmitting] = useState(false);
     const [showSubtype, setShowSubtype] = useState(false);
+
+    const { id } = useParams();
+    console.log(id);
+    // set states to fetched article when editing
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          if (id) {
+            const item = await fetchItemById(id);
+            // Populate form state values with the returned item
+            console.log(item);
+            if (item) {
+              console.log('FOUND');
+              setName(item.name);
+              setRarity(item.rarity);
+              setAttunementReq(item.attunementReq);
+              setEffects(item.effects);
+              setType(item.type);
+              setSubType(item.subType);
+            } else {
+              setName(blankItem.name);
+              setRarity(blankItem.rarity);
+              setAttunementReq(blankItem.attunementReq);
+              setEffects(blankItem.effects);
+              setType(blankItem.type);
+              setSubType(blankItem.subType);
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching item:', error);
+          // Handle error
+        }
+      };
+      fetchData();
+    }, [id]);
 
     useEffect(() => {
       if(type === 'wonderous item' 
@@ -62,10 +98,15 @@ export default function ItemForm(){
     const handleTypeSelect = (event: SelectChangeEvent<string>) => {
       setType(event.target.value as string);
     };
+
     const handleSubTypeSelect = (event: SelectChangeEvent<string>) => {
       setSubType(event.target.value as string);
     };
-    
+
+    const handelDelete = async () =>{
+      await deleteItem(id??"");
+      navigate('/items');
+    }
 
     // === Submit Handler ===
     const handleSubmit = async (e: React.FormEvent) => {
@@ -90,7 +131,6 @@ export default function ItemForm(){
               // Upload completed successfully
               setSubmitting(true)
               const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-    
               const item: Item = {
                 firebaseId: '', // Firestore will generate a unique ID
                 name,
@@ -102,8 +142,14 @@ export default function ItemForm(){
                 author: '',
                 imageUrl,
               };
-              const docRef = await addDoc(itemsCollection, item);
-              console.log('Item created with ID:', docRef.id);
+              if(!id){
+                const docRef = await addDoc(itemsCollection, item);
+                console.log('Item created with ID:', docRef.id);
+              }else{
+                item.firebaseId = id;
+                await updateItem(id, item);
+              }
+
               navigate('/items');
             }
           );
@@ -185,42 +231,42 @@ export default function ItemForm(){
                           {
                             (type === 'wonderous item') && (
                                   wonderousTypes.map(subtype => (
-                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                    <MenuItem value={subtype} key={subtype}>{subtype}</MenuItem>
                                   ))
                             )
                           }
                           {
                             (type === 'light armor') && (
                                   lightArmorTypes.map(subtype => (
-                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                    <MenuItem value={subtype} key={subtype}>{subtype}</MenuItem>
                                   ))
                             )
                           }
                           {
                             (type === 'medium armor') && (
                                   meduimArmorTypes.map(subtype => (
-                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                    <MenuItem value={subtype} key={subtype}>{subtype}</MenuItem>
                                   ))
                             )
                           }
                           {
                             (type === 'heavy armor') && (
                                   heavyArmorTypes.map(subtype => (
-                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                    <MenuItem value={subtype} key={subtype}>{subtype}</MenuItem>
                                   ))
                             )
                           }
                           {
                             (type === 'simple weapon') && (
                                   simpleWeaponTypes.map(subtype => (
-                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                    <MenuItem value={subtype} key={subtype}>{subtype}</MenuItem>
                                   ))
                             )
                           }
                           {
                             (type === 'martial weapon') && (
                                   martialWeaponTypes.map(subtype => (
-                                    <MenuItem value={subtype}>{subtype}</MenuItem>
+                                    <MenuItem value={subtype} key={subtype}>{subtype}</MenuItem>
                                   ))
                             )
                           }
@@ -261,7 +307,10 @@ export default function ItemForm(){
                         </label>
                     </div>
                     <Button type="submit" variant="contained" className="submit--button" style={{ marginTop: "20px" }}>
-                        Create Item
+                        {(!id)?'Create Item':'Update Item'}
+                    </Button>
+                    <Button variant="contained" onClick={()=>{handelDelete()}} className="del--button" style={{ marginTop: "20px", backgroundColor: "red", color: "white" }}>
+                        DELETE
                     </Button>
                 </form>
             </>
