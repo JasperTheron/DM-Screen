@@ -22,7 +22,7 @@ export default function ItemForm(){
     // === Form State ===
     const [name, setName] = useState('');
     const [rarity, setRarity] = useState('Common');
-    const [attunementReq, setAttunementReq] = useState('Requires attunement');
+    const [attunementReq, setAttunementReq] = useState('requires attunement');
     const [effects, setEffects] = useState('');
     const [type, setType] = useState('');
     const [subType, setSubType] = useState('');

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Article } from "../models/article"
 import TopicButton from "./TopicButton";
-
 interface Props{
     article: Article;
 }

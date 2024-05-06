@@ -6,9 +6,46 @@
 
 @font-face {
   font-family: DragonHunter;
-  src: url('/src/assets/DragonHunter.otf');
+  src: url('/src/assets/font/DragonHunter.otf');
   font-weight: bold;
 }
+@font-face {
+  font-family: carolinga;
+  src: url('/src/assets/font/carolingia.ttf');
+}
+@font-face {
+  font-family: dungrg;
+  src: url('/src/assets/font/DUNGRG__.TTF');
+}
+@font-face {
+  font-family: oldlondon;
+  src: url('/src/assets/font/Olondona.otf');
+}
+@font-face {
+  font-family: calid;
+  src: url('/src/assets/font/CALID___.TTF');
+}
+@font-face {
+  font-family: marcellus;
+  src: url('/src/assets/font/MarcellusSC-Regular.ttf');
+}
+@font-face {
+  font-family: requiem;
+  src: url('/src/assets/font/Requiem.ttf');
+}
+@font-face {
+  font-family: underworld;
+  src: url('/src/assets/font/underworld.ttf');
+}
+@font-face {
+  font-family: lumos;
+  src: url('/src/assets/font/LUMOS.TTF');
+}
+@font-face {
+  font-family: newspapertypes;
+  src: url('/src/assets/font/OldNewspaperTypes.ttf');
+}
+
 
 a{
   text-decoration: none;
@@ -28,6 +65,10 @@ main{
   flex-direction: column;
   align-items: center;
   width: 100vw;
+}
+
+.font--large{
+  font-size: 1.3em;
 }
 
 h1 {
@@ -50,6 +91,20 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+.item--text{
+  font-family: newspapertypes;
+  font-size: 1em;
+}
+.font--decorative--reg{
+  font-family: requiem;
+  font-weight: 600;
+}
+.font--decorative--head{
+  font-family: requiem;
+  font-weight: 600;
+}
+
+
 button:hover {
   border-color: #646cff;
 }
@@ -73,3 +128,4 @@ button:focus-visible {
 .strong--box--shadow{
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+
